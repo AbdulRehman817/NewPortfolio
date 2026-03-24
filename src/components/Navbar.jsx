@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 const NAV_LINKS = [
   { name: "About", href: "#about" },
