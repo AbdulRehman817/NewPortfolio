@@ -18,7 +18,10 @@ import {
   Flame,
   Wind,
   Atom,
-  FileCode
+  FileCode,
+  BarChart2,
+  Table,
+  Hash
 } from "lucide-react";
 import { FiGithub } from "react-icons/fi";
 import { LuLinkedin } from "react-icons/lu";
@@ -99,6 +102,12 @@ const SKILLS = [
   { name: "REST APIs", level: 90, icon: <Link className="w-5 h-5" />, description: "Designing and consuming secure, well-documented API endpoints." },
   { name: "Auth.js", level: 85, icon: <Lock className="w-5 h-5" />, description: "Implementing secure authentication flows and session management." },
   { name: "GitHub", level: 95, icon: <FiGithub className="w-5 h-5" />, description: "Version control, collaborative workflows, and CI/CD integration." },
+
+  // Data Science
+  { name: "Python", level: 40, icon: <Code2 className="w-5 h-5" />, description: "Learning Python fundamentals, scripting, and data-focused libraries." },
+  { name: "Pandas", level: 35, icon: <Table className="w-5 h-5" />, description: "Exploring data manipulation, cleaning, and analysis with DataFrames." },
+  { name: "NumPy", level: 35, icon: <Hash className="w-5 h-5" />, description: "Working with numerical arrays and mathematical operations for data processing." },
+  { name: "Matplotlib", level: 30, icon: <BarChart2 className="w-5 h-5" />, description: "Creating data visualizations and charts to communicate insights clearly." },
 ];
 
 // --- Components ---
@@ -358,7 +367,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                   <div className="text-center space-y-6">
                     <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 block">OR REACH ME DIRECTLY</span>
                     <div className="flex justify-center space-x-4">
-                      <a href="mailto:hello@nexus.io" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
+                      <a href="mailto:abdulrehmanbey1718@gmail.com" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
                         <Mail className="w-5 h-5" />
                       </a>
                       <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
@@ -572,7 +581,7 @@ const Navbar = ({ onContactClick }) => {
           className="text-2xl md:text-3xl font-display font-bold tracking-tighter cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          NEXUS<span className="text-indigo-500">.</span>
+          AR<span className="text-indigo-500">.</span>
         </motion.div>
 
         {/* Desktop Nav */}
@@ -899,7 +908,7 @@ export default function App() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="text-[clamp(80px,14vw,180px)] font-display font-bold tracking-tighter mb-12 leading-[0.85] uppercase"
+              className="text-[clamp(80px,11vw,180px)] font-display font-bold tracking-tighter mb-12 leading-[0.85] uppercase"
             >
               ABDUL <br />
               <span className="text-gradient inline-block transform -skew-x-6">REHMAN</span>
@@ -923,7 +932,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6 }}
-                  href="/resume.pdf" 
+                  href="/public/resume.pdf" 
                   download 
                   className="px-8 py-5 bg-zinc-900/40 border border-white/10 rounded-2xl flex items-center space-x-3 hover:bg-white/10 hover:border-indigo-500/30 transition-all group glass"
                 >
@@ -983,13 +992,12 @@ export default function App() {
                   transition={{ delay: 0.2 }}
                   className="text-zinc-400 text-lg md:text-xl leading-relaxed"
                 >
-                  I'm Abdul Rehman, a full-stack developer based in Pakistan. I specialize in building robust web applications using React, Node.js, and MongoDB. I believe in clean code, bold design, and experiences that leave a mark.
-                </motion.p>
+I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing passion for Data Science. I've built robust web applications using React, Node.js, and MongoDB, and I'm now expanding my skills with Python, data analysis, and machine learning. I believe in clean code, bold design, and experiences that leave a mark.                </motion.p>
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
                   {[
-                    { label: "PROJECTS", value: "10", suffix: "+" },
+                    { label: "PROJECTS", value: "15", suffix: "+" },
                     { label: "YEARS", value: "02", suffix: "+" },
                     { label: "DEDICATION", value: "100", suffix: "%" },
                     { label: "PASSION", value: "24", suffix: "/7" }
@@ -1044,64 +1052,102 @@ export default function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-zinc-900/10 -z-10" />
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
-            <div className="max-w-2xl">
-              <span className="text-indigo-500 font-mono text-xs uppercase tracking-widest mb-4 block">Expertise</span>
-              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Services</h2>
-              <p className="text-zinc-500 text-lg">Specialized solutions for modern digital challenges, blending aesthetics with technical excellence.</p>
-            </div>
+    <section id="services" className="py-32 relative overflow-hidden">
+  <div className="absolute inset-0 bg-zinc-900/10 -z-10" />
+  <div className="container mx-auto px-6">
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
+      <div className="max-w-2xl">
+        <span className="text-indigo-500 font-mono text-xs uppercase tracking-widest mb-4 block">Expertise</span>
+        <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Services</h2>
+        <p className="text-zinc-500 text-lg">Specialized solutions for modern digital challenges, blending aesthetics with technical excellence.</p>
+      </div>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      {[
+        { 
+          name: "UI/UX DESIGN", 
+          icon: <Palette className="w-8 h-8" />, 
+          desc: "Crafting visually stunning and intuitive user experiences that resonate with users.",
+          tags: ["Figma", "Design Systems", "Prototyping"],
+          isNew: false
+        },
+        { 
+          name: "SERVER LOGIC", 
+          icon: <Cpu className="w-8 h-8" />, 
+          desc: "Building robust, scalable, and high-performance backend architectures for complex apps.",
+          tags: ["Node.js", "PostgreSQL", "Architecture"],
+          isNew: false
+        },
+        { 
+          name: "API INTEGRATION", 
+          icon: <Globe className="w-8 h-8" />, 
+          desc: "Connecting systems with high-performance API solutions and seamless data flow.",
+          tags: ["REST", "GraphQL", "Webhooks"],
+          isNew: false
+        },
+        { 
+          name: "DATA SCIENCE", 
+          icon: <BarChart2 className="w-8 h-8" />, 
+          desc: "Exploring data analysis, visualization, and machine learning to turn raw data into real insights.",
+          tags: ["Python", "Pandas", "NumPy", "Matplotlib"],
+          isNew: true
+        }
+      ].map((service, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className={`p-10 bg-zinc-900/40 border rounded-[2.5rem] group transition-all duration-500 relative overflow-hidden flex flex-col h-full will-change-transform ${
+            service.isNew
+              ? "border-amber-500/20 hover:border-amber-500/40"
+              : "border-white/5 hover:border-indigo-500/30"
+          }`}
+        >
+          <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+            service.isNew
+              ? "bg-linear-to-b from-amber-500/0 to-amber-500/5"
+              : "bg-linear-to-b from-indigo-500/0 to-indigo-500/5"
+          }`} />
+
+          {service.isNew && (
+            <span className="absolute top-6 right-6 text-[10px] font-mono uppercase tracking-widest text-amber-400/80 border border-amber-500/20 px-2 py-1 rounded-md">
+              Learning
+            </span>
+          )}
+
+          <div className={`w-16 h-16 rounded-2xl bg-zinc-900 border flex items-center justify-center mb-10 transition-all duration-500 relative z-10 group-hover:scale-110 ${
+            service.isNew
+              ? "text-amber-400 border-white/10 group-hover:bg-amber-500/10 group-hover:border-amber-500/20"
+              : "text-indigo-400 border-white/10 group-hover:bg-indigo-500/10 group-hover:border-indigo-500/20"
+          }`}>
+            {service.icon}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
-            {[
-              { 
-                name: "UI/UX DESIGN", 
-                icon: <Palette className="w-8 h-8" />, 
-                desc: "Crafting visually stunning and intuitive user experiences that resonate with users.",
-                tags: ["Figma", "Design Systems", "Prototyping"]
-              },
-              { 
-                name: "SERVER LOGIC", 
-                icon: <Cpu className="w-8 h-8" />, 
-                desc: "Building robust, scalable, and high-performance backend architectures for complex apps.",
-                tags: ["Node.js", "PostgreSQL", "Architecture"]
-              },
-              { 
-                name: "API INTEGRATION", 
-                icon: <Globe className="w-8 h-8" />, 
-                desc: "Connecting systems with high-performance API solutions and seamless data flow.",
-                tags: ["REST", "GraphQL", "Webhooks"]
-              }
-            ].map((service, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="p-10 bg-zinc-900/40 border border-white/5 rounded-[2.5rem] group hover:border-indigo-500/30 transition-all duration-500 relative overflow-hidden flex flex-col h-full will-change-transform"
-              >
-                <div className="absolute inset-0 bg-linear-to-b from-indigo-500/0 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-indigo-400 mb-10 group-hover:scale-110 group-hover:bg-indigo-500/10 group-hover:border-indigo-500/20 transition-all duration-500 relative z-10">
-                  {service.icon}
-                </div>
-                <h4 className="text-2xl font-bold mb-4 tracking-tight relative z-10 group-hover:text-white transition-colors">{service.name}</h4>
-                <p className="text-zinc-500 text-lg leading-relaxed mb-8 relative z-10 group-hover:text-zinc-400 transition-colors flex-grow">{service.desc}</p>
-                <div className="flex flex-wrap gap-2 relative z-10">
-                  {service.tags.map(tag => (
-                    <span key={tag} className="text-[10px] font-mono text-indigo-400/60 uppercase tracking-widest border border-indigo-500/10 px-2 py-1 rounded-md">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+          <h4 className="text-2xl font-bold mb-4 tracking-tight relative z-10 group-hover:text-white transition-colors">
+            {service.name}
+          </h4>
+          <p className="text-zinc-500 text-lg leading-relaxed mb-8 relative z-10 group-hover:text-zinc-400 transition-colors flex-grow">
+            {service.desc}
+          </p>
+          <div className="flex flex-wrap gap-2 relative z-10">
+            {service.tags.map(tag => (
+              <span key={tag} className={`text-[10px] font-mono uppercase tracking-widest border px-2 py-1 rounded-md ${
+                service.isNew
+                  ? "text-amber-400/60 border-amber-500/10"
+                  : "text-indigo-400/60 border-indigo-500/10"
+              }`}>
+                {tag}
+              </span>
             ))}
           </div>
-        </div>
-      </section>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Skills Section */}
       <section id="skills" className="py-32">
@@ -1140,12 +1186,12 @@ export default function App() {
 
               <div className="flex flex-col items-center space-y-12">
                 <div className="space-y-8 flex flex-col items-center">
-                  <a href="mailto:hello@nexus.io" className="text-2xl md:text-6xl font-bold hover:text-indigo-400 transition-colors group break-all px-4">
-                    hello@nexus.io
+                  <a href="mailto:hello@nexus.io" className=" text-2xl md:text-4xl font-bold hover:text-indigo-400 transition-colors group break-all px-4">
+                  abdulrehmanbey1718@gmail.com
                   </a>
                   
                   <div className="flex flex-wrap justify-center gap-4">
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl flex items-center space-x-3 hover:bg-white/10 hover:border-indigo-500/30 transition-all group">
+                    <a href="https://github.com/AbdulRehman817" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl flex items-center space-x-3 hover:bg-white/10 hover:border-indigo-500/30 transition-all group">
                       <FiGithub className="w-5 h-5 group-hover:text-indigo-400 transition-colors" />
                       <span className="text-sm font-bold uppercase tracking-widest">Github</span>
                     </a>
@@ -1167,10 +1213,10 @@ export default function App() {
       <footer className="py-12 border-t border-white/5">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="font-display font-bold text-2xl">
-            NEXUS<span className="text-indigo-500">.</span>
+            AR<span className="text-indigo-500">.</span>
           </div>
           <div className="text-zinc-500 text-sm">
-            © {new Date().getFullYear()} Nexus. All rights reserved.
+            © {new Date().getFullYear()} AR. All rights reserved.
           </div>
           <div className="flex space-x-8">
             <a href="#" className="text-zinc-500 hover:text-white transition-colors">Privacy Policy</a>
