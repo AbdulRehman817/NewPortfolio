@@ -45,14 +45,14 @@ const PROJECTS = [
     title: "E-Commerce Platform",
     description: "A full-featured e-commerce platform built with React JS and Node.js/Express",
     longDescription: "A full-featured e-commerce platform built with React JS on the frontend and Node.js/Express on the backend. MongoDB handles data persistence. Includes a complete admin panel for inventory management.",
-    image: "https://picsum.photos/seed/quantum/1200/800",
+    image: "public/e-commerce1.PNG",
    tags:['React JS','MongoDB','Tailwind CSS','Node.js','Express'],
-    link: "#",
-    github: "#",
+    link: "https://e-commerce-website-react-js-gules.vercel.app/",
+    github: "https://github.com/AbdulRehman817/E-Commerce-Website-ReactJs",
     gallery: [
-      "https://picsum.photos/seed/q1/1200/800",
-      "https://picsum.photos/seed/q2/1200/800",
-      "https://picsum.photos/seed/q3/1200/800"
+      "public/e-commerce1.PNG",
+      "public/e-commerce-website-react-js-gules.vercel.app_(2).png",
+      "public/e-commerce-website-react-js-gules.vercel.app_SingleProduct_67ac8b338344fc3295b8ef4d.png"
     ]
   },
   {
@@ -60,14 +60,14 @@ const PROJECTS = [
     title: "Chat App",
     description: "A real-time messaging platform built on React using Firebase.",
     longDescription: "A real-time messaging platform built on React using Firebase. Users can send messages instantly, and see online status — all without page refreshes.",
-    image: "https://picsum.photos/seed/fashion/1200/800",
+    image: "public/chat-app-sc7o.vercel.app_ChatPage(2).png",
     tags:['React JS','Firebase','Tailwind CSS'],
-    link: "#",
-    github: "#",
+    link: "https://chat-app-sc7o.vercel.app/",
+    github: "https://github.com/AbdulRehman817/Chat-App",
     gallery: [
-      "https://picsum.photos/seed/e1/1200/800",
-      "https://picsum.photos/seed/e2/1200/800",
-      "https://picsum.photos/seed/e3/1200/800"
+      "public/chat-app-sc7o.vercel.app_ChatPage.png",
+      "public/chat-app-sc7o.vercel.app_ChatPage(2).png",
+      "public/chat-app-sc7o.vercel.app_signin"
     ]
   },
   {
@@ -76,14 +76,14 @@ const PROJECTS = [
     description: "A modern and responsive software company landing page",
     longDescription: "A modern and responsive software company website built to showcase services like custom development, IT consulting, and team augmentation. Designed with a focus on clean UI, scalability, and professional business presentation.",
     tags:["React","Tailwind CSS","Lucide-React"],
-    image: "https://picsum.photos/seed/social/1200/800",
+    image: "public/createi-soft-website.vercel.app_(2).png",
    
-    link: "#",
-    github: "#",
+    link: "https://createi-soft-website.vercel.app/",
+    github: "https://github.com/AbdulRehman817/CreateiSoft_Website",
     gallery: [
-      "https://picsum.photos/seed/n1/1200/800",
-      "https://picsum.photos/seed/n2/1200/800",
-      "https://picsum.photos/seed/n3/1200/800"
+      "public/createi-soft-website.vercel.app_(2).png",
+      "public/createi-soft-website.vercel.app_(6).png",
+      "public/createi-soft-website.vercel.app_(1).png"
     ]
   }
 ];
