@@ -45,14 +45,14 @@ const PROJECTS = [
     title: "E-Commerce Platform",
     description: "A full-featured e-commerce platform built with React JS and Node.js/Express",
     longDescription: "A full-featured e-commerce platform built with React JS on the frontend and Node.js/Express on the backend. MongoDB handles data persistence. Includes a complete admin panel for inventory management.",
-    image: "public/e-commerce1.PNG",
+    image: "e-commerce-homepage.png",
    tags:['React JS','MongoDB','Tailwind CSS','Node.js','Express'],
     link: "https://e-commerce-website-react-js-gules.vercel.app/",
     github: "https://github.com/AbdulRehman817/E-Commerce-Website-ReactJs",
     gallery: [
-      "public/e-commerce1.PNG",
-      "public/e-commerce-website-react-js-gules.vercel.app_(2).png",
-      "public/e-commerce-website-react-js-gules.vercel.app_SingleProduct_67ac8b338344fc3295b8ef4d.png"
+      "e-commerce1.PNG",
+      "e-commerce-website-react-js-gules.vercel.app_(2).png",
+      "e-commerce-website-react-js-gules.vercel.app_SingleProduct_67ac8b338344fc3295b8ef4d.png"
     ]
   },
   {
@@ -60,14 +60,14 @@ const PROJECTS = [
     title: "Chat App",
     description: "A real-time messaging platform built on React using Firebase.",
     longDescription: "A real-time messaging platform built on React using Firebase. Users can send messages instantly, and see online status — all without page refreshes.",
-    image: "public/chat-app-sc7o.vercel.app_ChatPage(2).png",
+    image: "chat-app-homepage.png",
     tags:['React JS','Firebase','Tailwind CSS'],
     link: "https://chat-app-sc7o.vercel.app/",
     github: "https://github.com/AbdulRehman817/Chat-App",
     gallery: [
-      "public/chat-app-sc7o.vercel.app_ChatPage.png",
-      "public/chat-app-sc7o.vercel.app_ChatPage(2).png",
-      "public/chat-app-sc7o.vercel.app_signin"
+      "chat-app-sc7o.vercel.app_ChatPage.png",
+      "chat-app-sc7o.vercel.app_ChatPage(2).png",
+      "chat-app-sc7o.vercel.app_signin.png"
     ]
   },
   {
@@ -76,16 +76,48 @@ const PROJECTS = [
     description: "A modern and responsive software company landing page",
     longDescription: "A modern and responsive software company website built to showcase services like custom development, IT consulting, and team augmentation. Designed with a focus on clean UI, scalability, and professional business presentation.",
     tags:["React","Tailwind CSS","Lucide-React"],
-    image: "public/createi-soft-website.vercel.app_(2).png",
+    image: "createi-soft-homepage.png",
    
     link: "https://createi-soft-website.vercel.app/",
     github: "https://github.com/AbdulRehman817/CreateiSoft_Website",
     gallery: [
-      "public/createi-soft-website.vercel.app_(2).png",
-      "public/createi-soft-website.vercel.app_(6).png",
-      "public/createi-soft-website.vercel.app_(1).png"
+      "createi-soft-website.vercel.app_(2).png",
+      "createi-soft-website.vercel.app_(6).png",
+      "createi-soft-website.vercel.app_(1).png"
     ]
-  }
+  },
+   {
+    id: 4,
+    title: "Aether OS",
+    category: "Systems",
+    description: "A cloud-native operating system designed for low-latency edge computing.",
+    longDescription: "Aether OS is a specialized operating system built from the ground up for edge devices. It features a microkernel architecture, built-in support for containerized workloads, and a distributed file system that ensures data consistency across global nodes.",
+    image: "https://picsum.photos/seed/os/1200/800",
+    tags: ["Rust", "WebAssembly", "Kubernetes", "gRPC"],
+    link: "#",
+    github: "#",
+    gallery: [
+      "https://picsum.photos/seed/o1/1200/800",
+      "https://picsum.photos/seed/o2/1200/800",
+      "https://picsum.photos/seed/o3/1200/800"
+    ]
+  },
+   {
+    id: 5,
+    title: "Aether OS",
+    category: "Systems",
+    description: "A cloud-native operating system designed for low-latency edge computing.",
+    longDescription: "Aether OS is a specialized operating system built from the ground up for edge devices. It features a microkernel architecture, built-in support for containerized workloads, and a distributed file system that ensures data consistency across global nodes.",
+    image: "https://picsum.photos/seed/os/1200/800",
+    tags: ["Rust", "WebAssembly", "Kubernetes", "gRPC"],
+    link: "#",
+    github: "#",
+    gallery: [
+      "https://picsum.photos/seed/o1/1200/800",
+      "https://picsum.photos/seed/o2/1200/800",
+      "https://picsum.photos/seed/o3/1200/800"
+    ]
+  },
 ];
 
 const SKILLS = [
@@ -1025,7 +1057,7 @@ I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing pa
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-32">
+     <section id="projects" className="py-32">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div className="max-w-2xl">
@@ -1033,20 +1065,32 @@ I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing pa
               <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Featured Projects</h2>
               <p className="text-zinc-500 text-lg">A selection of my recent works across various industries and technologies.</p>
             </div>
-            <button className="text-indigo-400 font-bold flex items-center hover:gap-3 transition-all group">
+            <Link 
+              to="/projects"
+              className="text-indigo-400 font-bold flex items-center hover:gap-3 transition-all group"
+            >
               View All Projects <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
           </div>
 
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 md:gap-12 space-y-8 md:space-y-12">
-            {PROJECTS.map((project) => (
-              <div key={project.id} className="break-inside-avoid pt-4">
-                <ProjectCard 
-                  project={project} 
-                  onClick={() => setSelectedProject(project)}
-                />
-              </div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {PROJECTS.slice(0, 3).map((project) => (
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  key={project.id} 
+                  className="break-inside-avoid pt-4"
+                >
+                  <ProjectCard 
+                    project={project} 
+                    onClick={() => setSelectedProject(project)}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </section>
