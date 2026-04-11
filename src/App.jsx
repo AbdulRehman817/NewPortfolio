@@ -1,6 +1,13 @@
 import { 
-  
-   
+  Routes, 
+  Route, 
+  Link, 
+  useNavigate,
+  useLocation
+} from "react-router-dom";
+import { FiGithub } from "react-icons/fi";
+import { LuLinkedin } from "react-icons/lu";
+import { 
   Mail, 
   ExternalLink, 
   Code2, 
@@ -14,7 +21,7 @@ import {
   Database,
   Server,
   Lock,
-  Link,
+  Link as LinkIcon,
   Flame,
   Wind,
   Atom,
@@ -23,8 +30,6 @@ import {
   Table,
   Hash
 } from "lucide-react";
-import { FiGithub } from "react-icons/fi";
-import { LuLinkedin } from "react-icons/lu";
 
 import React, { useState, useEffect, useRef } from "react";
 import { 
@@ -38,15 +43,21 @@ import {
   animate 
 } from "motion/react";
 
+// --- Types ---
+
+
+
+// --- Data ---
 
 const PROJECTS = [
   {
     id: 1,
     title: "E-Commerce Platform",
+    category: "Web Developments",
     description: "A full-featured e-commerce platform built with React JS and Node.js/Express",
     longDescription: "A full-featured e-commerce platform built with React JS on the frontend and Node.js/Express on the backend. MongoDB handles data persistence. Includes a complete admin panel for inventory management.",
     image: "e-commerce-homepage.png",
-   tags:['React JS','MongoDB','Tailwind CSS','Node.js','Express'],
+    tags: ['React JS', 'MongoDB', 'Tailwind CSS', 'Node.js', 'Express'],
     link: "https://e-commerce-website-react-js-gules.vercel.app/",
     github: "https://github.com/AbdulRehman817/E-Commerce-Website-ReactJs",
     gallery: [
@@ -58,10 +69,11 @@ const PROJECTS = [
   {
     id: 2,
     title: "Chat App",
+    category: "Web Developments",
     description: "A real-time messaging platform built on React using Firebase.",
     longDescription: "A real-time messaging platform built on React using Firebase. Users can send messages instantly, and see online status — all without page refreshes.",
     image: "chat-app-homepage.png",
-    tags:['React JS','Firebase','Tailwind CSS'],
+    tags: ['React JS', 'Firebase', 'Tailwind CSS'],
     link: "https://chat-app-sc7o.vercel.app/",
     github: "https://github.com/AbdulRehman817/Chat-App",
     gallery: [
@@ -73,11 +85,11 @@ const PROJECTS = [
   {
     id: 3,
     title: "Software Company Landing Page",
+    category: "Web Developments",
     description: "A modern and responsive software company landing page",
     longDescription: "A modern and responsive software company website built to showcase services like custom development, IT consulting, and team augmentation. Designed with a focus on clean UI, scalability, and professional business presentation.",
-    tags:["React","Tailwind CSS","Lucide-React"],
+    tags: ["React", "Tailwind CSS", "Lucide-React"],
     image: "createi-soft-homepage.png",
-   
     link: "https://createi-soft-website.vercel.app/",
     github: "https://github.com/AbdulRehman817/CreateiSoft_Website",
     gallery: [
@@ -86,38 +98,38 @@ const PROJECTS = [
       "createi-soft-website.vercel.app_(1).png"
     ]
   },
-   {
+  {
     id: 4,
-    title: "Aether OS",
-    category: "Systems",
-    description: "A cloud-native operating system designed for low-latency edge computing.",
-    longDescription: "Aether OS is a specialized operating system built from the ground up for edge devices. It features a microkernel architecture, built-in support for containerized workloads, and a distributed file system that ensures data consistency across global nodes.",
-    image: "https://picsum.photos/seed/os/1200/800",
-    tags: ["Rust", "WebAssembly", "Kubernetes", "gRPC"],
-    link: "#",
-    github: "#",
+    title: "Flask To-Do App",
+    category: "Python Projects",
+    description: "Manage daily tasks with add, complete, and delete functionality using Python Flask.",
+    longDescription:"A simple and responsive task management web application built with Python where users can add, complete, and delete daily tasks through a clean web interface.",
+    image: "Todo-App-homepage.png",
+    tags: ["Python", "Flask", "HTML5", "CSS3"],
+    link: "https://todo-app-in-python-cbc7.vercel.app/",
+    github: "https://github.com/AbdulRehman817/todo_app_in_python",
     gallery: [
-      "https://picsum.photos/seed/o1/1200/800",
-      "https://picsum.photos/seed/o2/1200/800",
-      "https://picsum.photos/seed/o3/1200/800"
+      "todo1.PNG",
+      "todo2.PNG",
+      "todo3.PNG"
     ]
   },
-   {
+  {
     id: 5,
-    title: "Aether OS",
-    category: "Systems",
-    description: "A cloud-native operating system designed for low-latency edge computing.",
-    longDescription: "Aether OS is a specialized operating system built from the ground up for edge devices. It features a microkernel architecture, built-in support for containerized workloads, and a distributed file system that ensures data consistency across global nodes.",
-    image: "https://picsum.photos/seed/os/1200/800",
-    tags: ["Rust", "WebAssembly", "Kubernetes", "gRPC"],
-    link: "#",
-    github: "#",
+    title: "Student Grade Calculator",
+    category: "Python Projects",
+    description: "Calculates total marks, average percentage, final grade, and performance remarks for multiple subject",
+    longDescription: "A Python-based web application that calculates total marks, average percentage, final grade, and performance remarks for multiple subjects through an interactive web form.",
+    image: "calulator-home-page.png",
+    tags: ["Python", "Flask", "HTML5", "CSS3"],
+    link: "https://student-grade-calculator-python-7ph.vercel.app/",
+    github: "https://github.com/AbdulRehman817/student-grade-calculator-python",
     gallery: [
-      "https://picsum.photos/seed/o1/1200/800",
-      "https://picsum.photos/seed/o2/1200/800",
-      "https://picsum.photos/seed/o3/1200/800"
+      "calculator1.PNG",
+      "calculator2.PNG",
+      "calculator3.PNG"
     ]
-  },
+  }
 ];
 
 const SKILLS = [
@@ -131,9 +143,9 @@ const SKILLS = [
   { name: "Express", level: 82, icon: <Cpu className="w-5 h-5" />, description: "Middleware development, routing, and backend logic for web services." },
   { name: "MongoDB", level: 80, icon: <Database className="w-5 h-5" />, description: "NoSQL database design, aggregation pipelines, and data modeling." },
   { name: "Firebase", level: 88, icon: <Flame className="w-5 h-5" />, description: "Real-time databases, authentication, and serverless cloud functions." },
-  { name: "REST APIs", level: 90, icon: <Link className="w-5 h-5" />, description: "Designing and consuming secure, well-documented API endpoints." },
+  { name: "REST APIs", level: 90, icon: <LinkIcon className="w-5 h-5" />, description: "Designing and consuming secure, well-documented API endpoints." },
   { name: "Auth.js", level: 85, icon: <Lock className="w-5 h-5" />, description: "Implementing secure authentication flows and session management." },
-  { name: "GitHub", level: 95, icon: <FiGithub className="w-5 h-5" />, description: "Version control, collaborative workflows, and CI/CD integration." },
+  { name: "GitHub", level: 95, icon: <FiGithub size={20} />, description: "Version control, collaborative workflows, and CI/CD integration." },
 
   // Data Science
   { name: "Python", level: 40, icon: <Code2 className="w-5 h-5" />, description: "Learning Python fundamentals, scripting, and data-focused libraries." },
@@ -262,7 +274,7 @@ const SkillCard = ({ skill, index }) => {
       onMouseLeave={() => setIsHovered(false)}
       transition={{ delay: index * 0.05 }}
       viewport={{ once: true, margin: "-50px" }}
-      className="group relative p-6 rounded-2xl bg-zinc-900/40 border border-white/5 hover:border-indigo-500/30 transition-all duration-500 cursor-help will-change-transform"
+      className="group relative p-6 rounded-2xl bg-zinc-900/40 border border-white/5 hover:border-indigo-500/30 transition-[border-color,background-color,transform] duration-500 cursor-help will-change-transform"
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
@@ -402,11 +414,11 @@ const ContactModal = ({ isOpen, onClose }) => {
                       <a href="mailto:abdulrehmanbey1718@gmail.com" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
                         <Mail className="w-5 h-5" />
                       </a>
-                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
-                       <FiGithub className="w-5 h-5"/>
+                      <a href="https://github.com/AbdulRehman817" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
+                        <FiGithub size={20} />
                       </a>
                       <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all">
-                        <LuLinkedin className="w-5 h-5"/>
+                        <LuLinkedin size={20} />
                       </a>
                     </div>
                   </div>
@@ -475,13 +487,6 @@ const ProjectModal = ({ project, onClose }) => {
             )}
             <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-transparent to-transparent" />
             <div className="absolute bottom-8 left-8 right-8">
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags?.map(tag => (
-                  <span key={tag} className="text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full bg-indigo-500 text-white">
-                    {tag}
-                  </span>
-                ))}
-              </div>
               <h2 className="text-4xl md:text-6xl font-display font-bold text-white tracking-tight">{project.title}</h2>
             </div>
           </div>
@@ -525,20 +530,9 @@ const ProjectModal = ({ project, onClose }) => {
                     </a>
                     {project.github && (
                       <a href={project.github} className="flex items-center justify-between p-3 rounded-xl glass text-white font-bold hover:bg-white/10 transition-colors">
-                        Source Code <FiGithub className="w-4 h-4"/>
+                        Source Code <FiGithub size={16} />
                       </a>
                     )}
-                  </div>
-                </div>
-
-                <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-4">Technologies</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags?.map(tag => (
-                      <span key={tag} className="text-xs font-medium px-3 py-1 rounded-lg bg-white/5 text-zinc-300">
-                        {tag}
-                      </span>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -567,6 +561,18 @@ const Navbar = ({ onContactClick }) => {
       document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e, href) => {
+    if (href.startsWith("#")) {
+      if (location.pathname !== "/") {
+        e.preventDefault();
+        navigate("/" + href);
+      }
+    }
+  };
 
   const navLinks = [
     { name: "About", href: "#about" },
@@ -607,14 +613,9 @@ const Navbar = ({ onContactClick }) => {
   return (
     <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${isScrolled ? "py-4 bg-black/80 backdrop-blur-xl border-b border-white/5" : "py-8 bg-transparent"}`}>
       <div className="container mx-auto px-6 flex justify-between items-center relative z-[110]">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-2xl md:text-3xl font-display font-bold tracking-tighter cursor-pointer"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
+        <Link to="/" className="text-2xl md:text-3xl font-display font-bold tracking-tighter cursor-pointer">
           AR<span className="text-indigo-500">.</span>
-        </motion.div>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
@@ -622,6 +623,7 @@ const Navbar = ({ onContactClick }) => {
             <motion.a
               key={link.name}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
@@ -685,7 +687,10 @@ const Navbar = ({ onContactClick }) => {
                   key={link.name}
                   href={link.href}
                   variants={linkVariants}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    handleNavClick(e, link.href);
+                    setIsMenuOpen(false);
+                  }}
                   className="text-4xl font-display font-bold text-white hover:text-indigo-400 transition-colors"
                 >
                   {link.name}
@@ -693,11 +698,11 @@ const Navbar = ({ onContactClick }) => {
               ))}
               
               <motion.div variants={linkVariants} className="pt-8 flex space-x-8">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass text-white">
-                  <FiGithub className="w-6 h-6" />
+                <a href="https://github.com/AbdulRehman817" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass text-white">
+                  <FiGithub size={24} />
                 </a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass text-white">
-                 <LuLinkedin className="w-6 h-6"/>
+                  <LuLinkedin size={24} />
                 </a>
               </motion.div>
 
@@ -720,7 +725,7 @@ const Navbar = ({ onContactClick }) => {
 };
 
 const ProjectCard = ({ project, onClick }) => {
-const cardRef = useRef(null);
+  const cardRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -800,13 +805,6 @@ const cardRef = useRef(null);
       </motion.div>
       
       <div className="px-2">
-        <motion.div 
-          variants={itemVariants}
-          className="flex flex-wrap gap-3 mb-3 md:mb-4"
-        >
-         
-        </motion.div>
-        
         <motion.h3 
           variants={itemVariants}
           whileHover={{ x: 5 }}
@@ -827,69 +825,16 @@ const cardRef = useRef(null);
   );
 };
 
-export default function App() {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-  const { scrollY } = useScroll();
-  
-  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
-
+function HomePage({ 
+  onContactClick, 
+  setSelectedProject, 
+  showAllProjects, 
+  setShowAllProjects,
+  y1,
+  y2
+}) {
   return (
-    <div className="min-h-screen font-sans selection:bg-indigo-500/30 mesh-gradient overflow-x-hidden">
-      <div className="noise" />
-      <CustomCursor />
-      
-      {/* Floating Background Elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <motion.div 
-          animate={{ 
-            x: [0, 80, 0],
-            y: [0, 40, 0],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[10%] left-[10%] w-64 h-64 bg-indigo-500/5 rounded-full blur-2xl will-change-transform"
-        />
-        <motion.div 
-          animate={{ 
-            x: [0, -120, 0],
-            y: [0, 80, 0],
-            rotate: [360, 180, 0]
-          }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[20%] right-[15%] w-96 h-96 bg-purple-500/5 rounded-full blur-2xl will-change-transform"
-        />
-      </div>
-      <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 bg-indigo-500 z-[150] origin-left shadow-[0_0_20px_rgba(99,102,241,0.5)]"
-        style={{ scaleX }}
-      >
-        <div className="absolute top-0 right-0 h-full w-24 bg-linear-to-r from-transparent to-white/40 blur-sm" />
-      </motion.div>
-
-      <Navbar onContactClick={() => setIsContactModalOpen(true)} />
-
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
-      />
-
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal 
-            project={selectedProject} 
-            onClose={() => setSelectedProject(null)} 
-          />
-        )}
-      </AnimatePresence>
-
+    <>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 pb-20 overflow-hidden">
         {/* Background Marquee */}
@@ -932,15 +877,13 @@ export default function App() {
               transition={{ duration: 0.6 }}
               className="flex items-center space-x-4 mb-8"
             >
-             
-             
             </motion.div>
 
             <motion.h1 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="text-[clamp(80px,11vw,180px)] font-display font-bold tracking-tighter mb-12 leading-[0.85] uppercase"
+              className="text-[clamp(80px,14vw,180px)] font-display font-bold tracking-tighter mb-12 leading-[0.85] uppercase"
             >
               ABDUL <br />
               <span className="text-gradient inline-block transform -skew-x-6">REHMAN</span>
@@ -964,7 +907,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6 }}
-                  href="/public/resume.pdf" 
+                  href="/resume.pdf" 
                   download 
                   className="px-8 py-5 bg-zinc-900/40 border border-white/10 rounded-2xl flex items-center space-x-3 hover:bg-white/10 hover:border-indigo-500/30 transition-all group glass"
                 >
@@ -987,16 +930,12 @@ export default function App() {
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-       
       </section>
 
       {/* About Section */}
       <section id="about" className="py-20 md:py-32 border-y border-white/5 bg-zinc-900/10 relative overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
-            {/* Left Side: Heading */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -1011,11 +950,8 @@ export default function App() {
               </h2>
             </motion.div>
 
-            {/* Right Side: Content */}
             <div className="lg:w-1/2 flex flex-col md:flex-row gap-8 lg:gap-12">
-              {/* Vertical Divider (Visible on Desktop) */}
               <div className="hidden md:block w-px h-auto bg-white/10 self-stretch" />
-
               <div className="flex-1 space-y-12">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -1024,9 +960,9 @@ export default function App() {
                   transition={{ delay: 0.2 }}
                   className="text-zinc-400 text-lg md:text-xl leading-relaxed"
                 >
-I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing passion for Data Science. I've built robust web applications using React, Node.js, and MongoDB, and I'm now expanding my skills with Python, data analysis, and machine learning. I believe in clean code, bold design, and experiences that leave a mark.                </motion.p>
+                  I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing passion for Data Science. I've built robust web applications using React, Node.js, and MongoDB, and I'm now expanding my skills with Python, data analysis, and machine learning. I believe in clean code, bold design, and experiences that leave a mark.
+                </motion.p>
 
-                {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
                   {[
                     { label: "PROJECTS", value: "15", suffix: "+" },
@@ -1057,7 +993,7 @@ I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing pa
       </section>
 
       {/* Projects Section */}
-     <section id="projects" className="py-32">
+      <section id="projects" className="py-32">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div className="max-w-2xl">
@@ -1067,7 +1003,7 @@ I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing pa
             </div>
             <Link 
               to="/projects"
-              className="text-indigo-400 font-bold flex items-center hover:gap-3 transition-all group"
+              className="px-8 py-4 bg-zinc-900/40 border border-white/10 rounded-2xl font-bold text-indigo-400 hover:bg-white/10 hover:border-indigo-500/30 transition-all flex items-center group glass"
             >
               View All Projects <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -1096,102 +1032,102 @@ I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing pa
       </section>
 
       {/* Services Section */}
-    <section id="services" className="py-32 relative overflow-hidden">
-  <div className="absolute inset-0 bg-zinc-900/10 -z-10" />
-  <div className="container mx-auto px-6">
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
-      <div className="max-w-2xl">
-        <span className="text-indigo-500 font-mono text-xs uppercase tracking-widest mb-4 block">Expertise</span>
-        <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Services</h2>
-        <p className="text-zinc-500 text-lg">Specialized solutions for modern digital challenges, blending aesthetics with technical excellence.</p>
-      </div>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-      {[
-        { 
-          name: "UI/UX DESIGN", 
-          icon: <Palette className="w-8 h-8" />, 
-          desc: "Crafting visually stunning and intuitive user experiences that resonate with users.",
-          tags: ["Figma", "Design Systems", "Prototyping"],
-          isNew: false
-        },
-        { 
-          name: "SERVER LOGIC", 
-          icon: <Cpu className="w-8 h-8" />, 
-          desc: "Building robust, scalable, and high-performance backend architectures for complex apps.",
-          tags: ["Node.js", "PostgreSQL", "Architecture"],
-          isNew: false
-        },
-        { 
-          name: "API INTEGRATION", 
-          icon: <Globe className="w-8 h-8" />, 
-          desc: "Connecting systems with high-performance API solutions and seamless data flow.",
-          tags: ["REST", "GraphQL", "Webhooks"],
-          isNew: false
-        },
-        { 
-          name: "DATA SCIENCE", 
-          icon: <BarChart2 className="w-8 h-8" />, 
-          desc: "Exploring data analysis, visualization, and machine learning to turn raw data into real insights.",
-          tags: ["Python", "Pandas", "NumPy", "Matplotlib"],
-          isNew: true
-        }
-      ].map((service, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className={`p-10 bg-zinc-900/40 border rounded-[2.5rem] group transition-all duration-500 relative overflow-hidden flex flex-col h-full will-change-transform ${
-            service.isNew
-              ? "border-amber-500/20 hover:border-amber-500/40"
-              : "border-white/5 hover:border-indigo-500/30"
-          }`}
-        >
-          <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-            service.isNew
-              ? "bg-linear-to-b from-amber-500/0 to-amber-500/5"
-              : "bg-linear-to-b from-indigo-500/0 to-indigo-500/5"
-          }`} />
-
-          {service.isNew && (
-            <span className="absolute top-6 right-6 text-[10px] font-mono uppercase tracking-widest text-amber-400/80 border border-amber-500/20 px-2 py-1 rounded-md">
-              Learning
-            </span>
-          )}
-
-          <div className={`w-16 h-16 rounded-2xl bg-zinc-900 border flex items-center justify-center mb-10 transition-all duration-500 relative z-10 group-hover:scale-110 ${
-            service.isNew
-              ? "text-amber-400 border-white/10 group-hover:bg-amber-500/10 group-hover:border-amber-500/20"
-              : "text-indigo-400 border-white/10 group-hover:bg-indigo-500/10 group-hover:border-indigo-500/20"
-          }`}>
-            {service.icon}
+      <section id="services" className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-zinc-900/10 -z-10" />
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
+            <div className="max-w-2xl">
+              <span className="text-indigo-500 font-mono text-xs uppercase tracking-widest mb-4 block">Expertise</span>
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Services</h2>
+              <p className="text-zinc-500 text-lg">Specialized solutions for modern digital challenges, blending aesthetics with technical excellence.</p>
+            </div>
           </div>
 
-          <h4 className="text-2xl font-bold mb-4 tracking-tight relative z-10 group-hover:text-white transition-colors">
-            {service.name}
-          </h4>
-          <p className="text-zinc-500 text-lg leading-relaxed mb-8 relative z-10 group-hover:text-zinc-400 transition-colors flex-grow">
-            {service.desc}
-          </p>
-          <div className="flex flex-wrap gap-2 relative z-10">
-            {service.tags.map(tag => (
-              <span key={tag} className={`text-[10px] font-mono uppercase tracking-widest border px-2 py-1 rounded-md ${
-                service.isNew
-                  ? "text-amber-400/60 border-amber-500/10"
-                  : "text-indigo-400/60 border-indigo-500/10"
-              }`}>
-                {tag}
-              </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {[
+              { 
+                name: "UI/UX DESIGN", 
+                icon: <Palette className="w-8 h-8" />, 
+                desc: "Crafting visually stunning and intuitive user experiences that resonate with users.",
+                tags: ["Figma", "Design Systems", "Prototyping"],
+                isNew: false
+              },
+              { 
+                name: "SERVER LOGIC", 
+                icon: <Cpu className="w-8 h-8" />, 
+                desc: "Building robust, scalable, and high-performance backend architectures for complex apps.",
+                tags: ["Node.js", "PostgreSQL", "Architecture"],
+                isNew: false
+              },
+              { 
+                name: "API INTEGRATION", 
+                icon: <Globe className="w-8 h-8" />, 
+                desc: "Connecting systems with high-performance API solutions and seamless data flow.",
+                tags: ["REST", "GraphQL", "Webhooks"],
+                isNew: false
+              },
+              { 
+                name: "DATA SCIENCE", 
+                icon: <BarChart2 className="w-8 h-8" />, 
+                desc: "Exploring data analysis, visualization, and machine learning to turn raw data into real insights.",
+                tags: ["Python", "Pandas", "NumPy", "Matplotlib"],
+                isNew: true
+              }
+            ].map((service, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className={`p-10 bg-zinc-900/40 border rounded-[2.5rem] group transition-all duration-500 relative overflow-hidden flex flex-col h-full will-change-transform ${
+                  service.isNew
+                    ? "border-amber-500/20 hover:border-amber-500/40"
+                    : "border-white/5 hover:border-indigo-500/30"
+                }`}
+              >
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                  service.isNew
+                    ? "bg-linear-to-b from-amber-500/0 to-amber-500/5"
+                    : "bg-linear-to-b from-indigo-500/0 to-indigo-500/5"
+                }`} />
+
+                {service.isNew && (
+                  <span className="absolute top-6 right-6 text-[10px] font-mono uppercase tracking-widest text-amber-400/80 border border-amber-500/20 px-2 py-1 rounded-md">
+                    Learning
+                  </span>
+                )}
+
+                <div className={`w-16 h-16 rounded-2xl bg-zinc-900 border flex items-center justify-center mb-10 transition-all duration-500 relative z-10 group-hover:scale-110 ${
+                  service.isNew
+                    ? "text-amber-400 border-white/10 group-hover:bg-amber-500/10 group-hover:border-amber-500/20"
+                    : "text-indigo-400 border-white/10 group-hover:bg-indigo-500/10 group-hover:border-indigo-500/20"
+                }`}>
+                  {service.icon}
+                </div>
+
+                <h4 className="text-2xl font-bold mb-4 tracking-tight relative z-10 group-hover:text-white transition-colors">
+                  {service.name}
+                </h4>
+                <p className="text-zinc-500 text-lg leading-relaxed mb-8 relative z-10 group-hover:text-zinc-400 transition-colors flex-grow">
+                  {service.desc}
+                </p>
+                <div className="flex flex-wrap gap-2 relative z-10">
+                  {service.tags.map(tag => (
+                    <span key={tag} className={`text-[10px] font-mono uppercase tracking-widest border px-2 py-1 rounded-md ${
+                      service.isNew
+                        ? "text-amber-400/60 border-amber-500/10"
+                        : "text-indigo-400/60 border-indigo-500/10"
+                    }`}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
             ))}
           </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
 
       {/* Skills Section */}
       <section id="skills" className="py-32">
@@ -1230,44 +1166,204 @@ I'm Abdul Rehman, based in Pakistan — a full-stack developer with a growing pa
 
               <div className="flex flex-col items-center space-y-12">
                 <div className="space-y-8 flex flex-col items-center">
-                  <a href="mailto:hello@nexus.io" className=" text-2xl md:text-4xl font-bold hover:text-indigo-400 transition-colors group break-all px-4">
-                  abdulrehmanbey1718@gmail.com
+                  <a href="mailto:abdulrehmanbey1718@gmail.com" className="text-2xl md:text-6xl font-bold hover:text-indigo-400 transition-colors group break-all px-4">
+                    abdulrehmanbey1718@gmail.com
                   </a>
                   
                   <div className="flex flex-wrap justify-center gap-4">
                     <a href="https://github.com/AbdulRehman817" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl flex items-center space-x-3 hover:bg-white/10 hover:border-indigo-500/30 transition-all group">
-                      <FiGithub className="w-5 h-5 group-hover:text-indigo-400 transition-colors" />
+                      <FiGithub size={20} />
                       <span className="text-sm font-bold uppercase tracking-widest">Github</span>
                     </a>
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl flex items-center space-x-3 hover:bg-white/10 hover:border-indigo-500/30 transition-all group">
-                      <LuLinkedin  className="w-5 h-5 group-hover:text-indigo-400 transition-colors" />
+                      <LuLinkedin size={20} />
                       <span className="text-sm font-bold uppercase tracking-widest">Linkedin</span>
                     </a>
                   </div>
                 </div>
-
-              
               </div>
             </motion.div>
           </div>
         </div>
       </section>
+    </>
+  );
+}
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="font-display font-bold text-2xl">
-            AR<span className="text-indigo-500">.</span>
-          </div>
-          <div className="text-zinc-500 text-sm">
-            © {new Date().getFullYear()} AR. All rights reserved.
-          </div>
-          <div className="flex space-x-8">
-            <a href="#" className="text-zinc-500 hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-zinc-500 hover:text-white transition-colors">Terms of Service</a>
-          </div>
+function ProjectsPage({ setSelectedProject }) {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const filters = ["All", "Web Developments", "Python Projects"];
+  
+  const filteredProjects = activeFilter === "All" 
+    ? PROJECTS 
+    : PROJECTS.filter(p => p.category === activeFilter);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="pt-32 pb-20">
+      <div className="container mx-auto px-6">
+        <div className="max-w-4xl mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="text-indigo-500 font-mono text-xs uppercase tracking-widest mb-4 block">Archive</span>
+            <h1 className="text-6xl md:text-8xl font-display font-bold mb-8 uppercase tracking-tighter">
+              All <span className="text-gradient">Projects</span>
+            </h1>
+            <p className="text-zinc-500 text-xl leading-relaxed max-w-2xl">
+              A comprehensive collection of my work, ranging from experimental prototypes to production-ready systems.
+            </p>
+          </motion.div>
         </div>
-      </footer>
+
+        {/* Filters */}
+        <div className="flex flex-wrap gap-4 mb-16">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-6 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all ${
+                activeFilter === filter 
+                  ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/20" 
+                  : "bg-zinc-900/40 border border-white/5 text-zinc-500 hover:border-indigo-500/30 hover:text-white"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <motion.div 
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                key={project.id}
+              >
+                <ProjectCard 
+                  project={project} 
+                  onClick={() => setSelectedProject(project)}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+        
+        {filteredProjects.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-zinc-500 text-xl">No projects found in this category.</p>
+          </div>
+        )}
+      </div>
     </div>
+  );
+}
+
+export default function App() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+  const { scrollY } = useScroll();
+  
+  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
+
+  return (
+
+      <div className="min-h-screen font-sans selection:bg-indigo-500/30 mesh-gradient overflow-x-hidden">
+        <div className="noise" />
+        <CustomCursor />
+        
+        {/* Floating Background Elements */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+          <motion.div 
+            animate={{ 
+              x: [0, 80, 0],
+              y: [0, 40, 0],
+              rotate: [0, 180, 360]
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute top-[10%] left-[10%] w-64 h-64 bg-indigo-500/5 rounded-full blur-2xl will-change-transform"
+          />
+          <motion.div 
+            animate={{ 
+              x: [0, -120, 0],
+              y: [0, 80, 0],
+              rotate: [360, 180, 0]
+            }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-[20%] right-[15%] w-96 h-96 bg-purple-500/5 rounded-full blur-2xl will-change-transform"
+          />
+        </div>
+        <motion.div 
+          className="fixed top-0 left-0 right-0 h-1.5 bg-indigo-500 z-[150] origin-left shadow-[0_0_20px_rgba(99,102,241,0.5)]"
+          style={{ scaleX }}
+        >
+          <div className="absolute top-0 right-0 h-full w-24 bg-linear-to-r from-transparent to-white/40 blur-sm" />
+        </motion.div>
+
+        <Navbar onContactClick={() => setIsContactModalOpen(true)} />
+
+        <ContactModal 
+          isOpen={isContactModalOpen} 
+          onClose={() => setIsContactModalOpen(false)} 
+        />
+
+        <AnimatePresence>
+          {selectedProject && (
+            <ProjectModal 
+              project={selectedProject} 
+              onClose={() => setSelectedProject(null)} 
+            />
+          )}
+        </AnimatePresence>
+
+        <Routes>
+          <Route path="/" element={
+            <HomePage 
+              onContactClick={() => setIsContactModalOpen(true)}
+              setSelectedProject={setSelectedProject}
+              showAllProjects={showAllProjects}
+              setShowAllProjects={setShowAllProjects}
+              y1={y1}
+              y2={y2}
+            />
+          } />
+          <Route path="/projects" element={
+            <ProjectsPage setSelectedProject={setSelectedProject} />
+          } />
+        </Routes>
+
+        {/* Footer */}
+        <footer className="py-12 border-t border-white/5">
+          <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <Link to="/" className="font-display font-bold text-2xl">
+              AR<span className="text-indigo-500">.</span>
+            </Link>
+            <div className="text-zinc-500 text-sm">
+              © {new Date().getFullYear()} AR. All rights reserved.
+            </div>
+            <div className="flex space-x-8">
+              <a href="#" className="text-zinc-500 hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="text-zinc-500 hover:text-white transition-colors">Terms of Service</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+
   );
 }
